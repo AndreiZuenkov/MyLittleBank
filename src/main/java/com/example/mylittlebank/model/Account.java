@@ -12,9 +12,9 @@ public class Account {
 
     @Id
     @Column(name="account_number")
-    private Long accountNumber;
+    private long accountNumber;
 
-    private Double amount;
+    private double amount;
 
     @Column(name="opening_date")
     private LocalDate openingDate;
@@ -22,7 +22,7 @@ public class Account {
     @Column(name="validity_period")
     private LocalDate validityPeriod;
 
-    private Long owner;
+    private long owner;
 
     public Account() {
     }
