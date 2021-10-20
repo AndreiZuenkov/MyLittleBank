@@ -40,4 +40,9 @@ public class MainController {
         return "main";
     }
 
+    @GetMapping("hello")
+    public String greeting(){
+        return "hello";
+    }
+
 }
