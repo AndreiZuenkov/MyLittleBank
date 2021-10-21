@@ -1,4 +1,4 @@
-package com.example.mylittlebank;
+package com.example.mylittlebank.controller;
 
 
 import com.example.mylittlebank.model.User;
@@ -29,17 +29,17 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping("/main")
-    public String add(@RequestParam String name, @RequestParam String email, @RequestParam String phone,
-                      @RequestParam String address, @RequestParam String date, Model model){
-
-        User user=new User(name, email, phone, address, LocalDate.parse(date));
-        userRepo.save(user);
-        Iterable<User> users=userRepo.findAll();
-
-        model.addAttribute("users", users);
-        return "main";
-    }
+//    @PostMapping("/main")
+//    public String add(@RequestParam String name, @RequestParam String email, @RequestParam String phone,
+//                      @RequestParam String address, @RequestParam String date, Model model){
+//
+//        User user=new User(name, email, phone, address, LocalDate.parse(date));
+//        userRepo.save(user);
+//        Iterable<User> users=userRepo.findAll();
+//
+//        model.addAttribute("users", users);
+//        return "main";
+//    }
 
     @GetMapping()
     public String greeting(){
