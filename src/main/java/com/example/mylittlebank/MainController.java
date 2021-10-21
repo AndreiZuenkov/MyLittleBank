@@ -1,5 +1,6 @@
 package com.example.mylittlebank;
 
+
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class MainController {
     private UserRepo userRepo;
 
 
-    @GetMapping
+    @GetMapping("/main")
     public String main(Model model){
 
         Iterable<User> users=userRepo.findAll();
@@ -28,7 +29,7 @@ public class MainController {
         return "main";
     }
 
-    @PostMapping
+    @PostMapping("/main")
     public String add(@RequestParam String name, @RequestParam String email, @RequestParam String phone,
                       @RequestParam String address, @RequestParam String date, Model model){
 
@@ -40,9 +41,9 @@ public class MainController {
         return "main";
     }
 
-    @GetMapping("hello")
+    @GetMapping()
     public String greeting(){
-        return "hello";
+        return "home";
     }
 
 }

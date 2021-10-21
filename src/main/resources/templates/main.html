@@ -5,7 +5,9 @@
     <title>Title</title>
 </head>
 <body>
-
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
 <div>
     <form method="post">
         <input type="text" name="name" placeholder="Введите ФИО">
