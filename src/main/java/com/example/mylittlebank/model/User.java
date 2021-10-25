@@ -1,11 +1,8 @@
 package com.example.mylittlebank.model;
 
 
-import org.apache.tomcat.jni.Local;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Set;
 
 
 @Entity
