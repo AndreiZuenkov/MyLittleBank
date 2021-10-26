@@ -46,7 +46,32 @@ public class UserService {
 
     public void updateProfile(String id, User user) {
 
-        User userFromDb = userRepo.findById(Long.parseLong(id));
+        User userFromDb=findUserById(id);
+
+        String userFullName=userFromDb.getFullName();
+
+        if(user.getFullName() != null && !user.getFullName().equals(userFullName)){
+            userFromDb.setFullName(user.getFullName());
+        }
+
+        String userEmail=userFromDb.getEmail();
+
+        if(user.getEmail() != null && !user.getEmail().equals(userEmail)){
+            userFromDb.setEmail(user.getEmail());
+        }
+
+        String userPhone=userFromDb.getPhone();
+
+        if(user.getPhone() != null && !user.getPhone().equals(userPhone)){
+            userFromDb.setPhone((user.getPhone()));
+        }
+
+        String userAddress=userFromDb.getEmail();
+
+        if (user.getAddress() !=null && !user.getAddress().equals(userAddress)){
+            userFromDb.setAddress(user.getAddress());
+        }
+
 
 
     }

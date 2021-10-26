@@ -13,9 +13,6 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-    private UserRepo userRepo;
-
-    @Autowired
     private UserService userService;
 
     @GetMapping
