@@ -16,31 +16,30 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public List<User> findAllUsers(){
+    public List<User> findAllUsers() {
 
         return userService.findAllUsers();
     }
 
     @PostMapping
-    public boolean addNewUser(@RequestBody User user){
+    public boolean addNewUser(@RequestBody User user) {
 
-         return  userService.addUser(user);
+        return userService.addUser(user);
 
     }
 
     @GetMapping("/{id}")
-    public User findUserById(@PathVariable String id){
+    public User findUserById(@PathVariable String id) {
 
         return userService.findUserById(id);
 
     }
 
     @PatchMapping("/{id}")
-    public User changeUser(@PathVariable String id, @RequestBody User user){
+    public User changeUser(@PathVariable String id, @RequestBody User user) {
 
+        userService.updateProfile(id, user);
 
-
-        userService.updateProfile(id,user);
-        return null;
+        return userService.findUserById(id);
     }
 }

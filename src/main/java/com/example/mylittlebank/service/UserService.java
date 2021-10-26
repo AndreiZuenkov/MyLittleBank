@@ -5,6 +5,7 @@ import com.example.mylittlebank.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -72,6 +73,14 @@ public class UserService {
             userFromDb.setAddress(user.getAddress());
         }
 
+        LocalDate userDateOfBirth=userFromDb.getDateOfBirth();
+
+        if (user.getDateOfBirth() !=null && user.getDateOfBirth().equals(userDateOfBirth)){
+            userFromDb.setDateOfBirth(user.getDateOfBirth());
+
+        }
+
+        userRepo.save(userFromDb);
 
 
     }
