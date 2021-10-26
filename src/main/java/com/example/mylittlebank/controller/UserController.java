@@ -6,6 +6,7 @@ import com.example.mylittlebank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -18,29 +19,23 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public Iterable<User> findAllUsers(){
+    public List<User> findAllUsers(){
 
-        Iterable<User> users=userRepo.findAll();
-
-        return users;
+        return userService.findAllUsers();
     }
 
     @PostMapping
     public boolean addNewUser(@RequestBody User user){
 
-        userRepo.save(user);
-
-         return  userRepo.existsById(user.getId());
+         return  userService.addUser(user);
 
     }
 
     @GetMapping("/{id}")
     public User findUserById(@PathVariable String id){
 
-        long longId=Long.parseLong(id);
-        User user=userRepo.findById(longId);
+        return userService.findUserById(id);
 
-        return user;
     }
 
     @PatchMapping("/{id}")
