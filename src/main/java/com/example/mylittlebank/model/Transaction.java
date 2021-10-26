@@ -16,17 +16,13 @@ public class Transaction {
     @Column(name="date_time")
     private Date dateTime;
 
-    private long account;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     public Transaction() {
     }
 
-    public Transaction(String type, double amount, Date dateTime, long account) {
-        this.type = type;
-        this.amount = amount;
-        this.dateTime = dateTime;
-        this.account = account;
-    }
 
     public String getType() {
         return type;
@@ -52,11 +48,11 @@ public class Transaction {
         this.dateTime = dateTime;
     }
 
-    public long getAccount() {
+    public Account getAccount() {
         return account;
     }
 
-    public void setAccount(long account) {
+    public void setAccount(Account account) {
         this.account = account;
     }
 }

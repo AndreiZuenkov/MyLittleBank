@@ -22,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping
-    public boolean addNewUser(@RequestBody User user) {
+    public boolean addUser(@RequestBody User user) {
 
         return userService.addUser(user);
 
@@ -36,10 +36,16 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public User changeUser(@PathVariable String id, @RequestBody User user) {
+    public User updateProfile(@PathVariable String id, @RequestBody User user) {
 
         userService.updateProfile(id, user);
 
         return userService.findUserById(id);
+    }
+
+    @DeleteMapping("{id}")
+    public boolean deleteUser(@PathVariable String id){
+
+        return userService.deleteUser(id);
     }
 }

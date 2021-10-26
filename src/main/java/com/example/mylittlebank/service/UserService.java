@@ -84,4 +84,14 @@ public class UserService {
 
 
     }
+
+    public boolean deleteUser(String id){
+
+        if(findUserById(id) != null){
+            userRepo.delete(findUserById(id));
+            return true;
+        }
+
+        return false;
+    }
 }

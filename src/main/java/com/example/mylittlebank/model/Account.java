@@ -1,39 +1,31 @@
 package com.example.mylittlebank.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name="accounts")
+@Table(name = "accounts")
 public class Account {
 
     @Id
-    @Column(name="account_number")
+    @Column(name = "account_number")
     private long accountNumber;
 
     private double amount;
 
-    @Column(name="opening_date")
+    @Column(name = "opening_date")
     private LocalDate openingDate;
 
-    @Column(name="validity_period")
+    @Column(name = "validity_period")
     private LocalDate validityPeriod;
 
-    private long owner;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
     public Account() {
     }
 
-    public Account(Long accountNumber, Double amount, LocalDate openingDate, LocalDate validityPeriod, Long owner) {
-        this.accountNumber = accountNumber;
-        this.amount = amount;
-        this.openingDate = openingDate;
-        this.validityPeriod = validityPeriod;
-        this.owner = owner;
-    }
 
     public Long getAccountNumber() {
         return accountNumber;
@@ -67,11 +59,11 @@ public class Account {
         this.validityPeriod = validityPeriod;
     }
 
-    public Long getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public void setOwner(Long owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 }
