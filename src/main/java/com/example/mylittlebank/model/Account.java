@@ -26,6 +26,13 @@ public class Account {
     public Account() {
     }
 
+    public Account(long accountNumber, double amount, LocalDate openingDate, LocalDate validityPeriod, User owner) {
+        this.accountNumber = accountNumber;
+        this.amount = amount;
+        this.openingDate = openingDate;
+        this.validityPeriod = validityPeriod;
+        this.owner = owner;
+    }
 
     public Long getAccountNumber() {
         return accountNumber;
