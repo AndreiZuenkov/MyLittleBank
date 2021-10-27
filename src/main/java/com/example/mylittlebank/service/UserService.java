@@ -33,61 +33,63 @@ public class UserService {
         return true;
     }
 
-    public User findUserById(String idFromQuery){
+    public User findUserById(String idFromQuery) {
 
-        long id=Long.parseLong(idFromQuery);
-        User userFromDb=userRepo.findById(id);
+        long id = Long.parseLong(idFromQuery);
 
-        if(userFromDb != null )
-            return userFromDb;
+        User userFromDb = userRepo.findById(id);
 
-        return null;
+        return userFromDb;
 
     }
 
     public void updateProfile(String id, User user) {
 
-        User userFromDb=findUserById(id);
+        User userFromDb = findUserById(id);
 
-        String userFullName=userFromDb.getFullName();
-
-        if(user.getFullName() != null && !user.getFullName().equals(userFullName)){
-            userFromDb.setFullName(user.getFullName());
-        }
-
-        String userEmail=userFromDb.getEmail();
-
-        if(user.getEmail() != null && !user.getEmail().equals(userEmail)){
-            userFromDb.setEmail(user.getEmail());
-        }
-
-        String userPhone=userFromDb.getPhone();
-
-        if(user.getPhone() != null && !user.getPhone().equals(userPhone)){
-            userFromDb.setPhone((user.getPhone()));
-        }
-
-        String userAddress=userFromDb.getEmail();
-
-        if (user.getAddress() !=null && !user.getAddress().equals(userAddress)){
-            userFromDb.setAddress(user.getAddress());
-        }
-
-        LocalDate userDateOfBirth=userFromDb.getDateOfBirth();
-
-        if (user.getDateOfBirth() !=null && user.getDateOfBirth().equals(userDateOfBirth)){
-            userFromDb.setDateOfBirth(user.getDateOfBirth());
-
-        }
+        checkUserData(user,userFromDb);
 
         userRepo.save(userFromDb);
 
-
     }
 
-    public boolean deleteUser(String id){
+    private void checkUserData(User userFromQuery, User userFromDb){
 
-        if(findUserById(id) != null){
+        String userFullName = userFromDb.getFullName();
+
+        if (userFromQuery.getFullName() != null && !userFromQuery.getFullName().equals(userFullName)) {
+            userFromDb.setFullName(userFromQuery.getFullName());
+        }
+
+        String userEmail = userFromDb.getEmail();
+
+        if (userFromQuery.getEmail() != null && !userFromQuery.getEmail().equals(userEmail)) {
+            userFromDb.setEmail(userFromQuery.getEmail());
+        }
+
+        String userPhone = userFromDb.getPhone();
+
+        if (userFromQuery.getPhone() != null && !userFromQuery.getPhone().equals(userPhone)) {
+            userFromDb.setPhone((userFromQuery.getPhone()));
+        }
+
+        String userAddress = userFromDb.getEmail();
+
+        if (userFromQuery.getAddress() != null && !userFromQuery.getAddress().equals(userAddress)) {
+            userFromDb.setAddress(userFromQuery.getAddress());
+        }
+
+        LocalDate userDateOfBirth = userFromDb.getDateOfBirth();
+
+        if (userFromQuery.getDateOfBirth() != null && userFromQuery.getDateOfBirth().equals(userDateOfBirth)) {
+            userFromDb.setDateOfBirth(userFromQuery.getDateOfBirth());
+
+        }
+    }
+
+    public boolean deleteUser(String id) {
+
+        if (findUserById(id) != null) {
             userRepo.delete(findUserById(id));
             return true;
         }
