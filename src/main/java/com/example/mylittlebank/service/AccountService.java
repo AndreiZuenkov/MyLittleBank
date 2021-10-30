@@ -43,4 +43,17 @@ public class AccountService {
 
         return account;
     }
+
+    private Account findByAccountNumber(String accountNumber){
+        return accountRepo.findByAccountNumber(Long.parseLong(accountNumber));
+    }
+
+    public boolean deleteAccount(String idFromQuery, String accountNumber){
+
+        if(findByAccountNumber(accountNumber) !=null){
+            accountRepo.delete(findByAccountNumber(accountNumber));
+            return true;
+        }
+        return false;
+    }
 }

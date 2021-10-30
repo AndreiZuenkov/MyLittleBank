@@ -9,4 +9,5 @@ import java.util.List;
 public interface AccountRepo extends CrudRepository<Account, Long> {
 
     List<Account> findAllByOwner(User user);
+    Account findByAccountNumber(long accountNumber);
 }

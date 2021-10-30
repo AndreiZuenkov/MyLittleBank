@@ -3,10 +3,7 @@ package com.example.mylittlebank.controller;
 import com.example.mylittlebank.model.Account;
 import com.example.mylittlebank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,10 @@ public class AccountController {
 
         accountService.createAccount(id,account);
         return null;
+    }
+
+    @DeleteMapping("/{id}/{accountNumber}")
+    public void deleteAccount(@PathVariable String id, @PathVariable String accountNumber){
+        accountService.deleteAccount(id, accountNumber);
     }
 }
