@@ -3,14 +3,12 @@ package com.example.mylittlebank.service;
 import com.example.mylittlebank.model.Account;
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.repository.AccountRepo;
-import com.example.mylittlebank.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
-import java.util.UUID;
 
 @Service
 public class AccountService {

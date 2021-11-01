@@ -1,7 +1,9 @@
 package com.example.mylittlebank.service;
 
+import com.example.mylittlebank.dto.UserDto;
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.repository.UserRepo;
+import com.example.mylittlebank.utils.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private UserMapper userMapper;
+
     public List<User> findAllUsers() {
 
         List<User> userList = userRepo.findAll();
@@ -21,14 +26,25 @@ public class UserService {
         return userList;
     }
 
-    public boolean addUser(User user) {
+//    public boolean addUser(User user) {
+//
+//        User userFromDb = userRepo.findByFullName(user.getFullName());
+//
+//        if (userFromDb != null) {
+//            return false;
+//        }
+//        userRepo.save(user);
+//
+//        return true;
+//    }
+    public boolean addUser(UserDto userDto) {
 
-        User userFromDb = userRepo.findByFullName(user.getFullName());
+        User userFromDb = userRepo.findByFullName(userMapper.mapToUser(userDto).getFullName());
 
         if (userFromDb != null) {
             return false;
         }
-        userRepo.save(user);
+        userRepo.save(userMapper.mapToUser(userDto));
 
         return true;
     }

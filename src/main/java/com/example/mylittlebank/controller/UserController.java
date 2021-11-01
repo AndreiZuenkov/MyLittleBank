@@ -1,13 +1,12 @@
 package com.example.mylittlebank.controller;
 
+import com.example.mylittlebank.dto.UserDto;
 import com.example.mylittlebank.model.User;
-import com.example.mylittlebank.repository.UserRepo;
 import com.example.mylittlebank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -21,11 +20,17 @@ public class UserController {
         return userService.findAllUsers();
     }
 
+//    @PostMapping
+//    public boolean addUser(@RequestBody User user) {
+//
+//        return userService.addUser(user);
+//
+//    }
+
     @PostMapping
-    public boolean addUser(@RequestBody User user) {
+    public boolean addUser(@RequestParam UserDto userDto){
 
-        return userService.addUser(user);
-
+        return userService.addUser(userDto);
     }
 
     @GetMapping("/{id}")
