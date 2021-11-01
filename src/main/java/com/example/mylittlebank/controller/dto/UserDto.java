@@ -1,4 +1,4 @@
-package com.example.mylittlebank.dto;
+package com.example.mylittlebank.controller.dto;
 
 
 

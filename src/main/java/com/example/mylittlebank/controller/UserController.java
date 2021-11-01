@@ -1,6 +1,6 @@
 package com.example.mylittlebank.controller;
 
-import com.example.mylittlebank.dto.UserDto;
+import com.example.mylittlebank.controller.dto.UserDto;
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class UserController {
 //    }
 
     @PostMapping
-    public boolean addUser(@RequestParam UserDto userDto){
+    public boolean addUser(@RequestBody UserDto userDto){
 
         return userService.addUser(userDto);
     }
