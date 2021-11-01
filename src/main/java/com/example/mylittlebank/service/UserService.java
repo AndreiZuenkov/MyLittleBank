@@ -26,17 +26,7 @@ public class UserService {
         return userList;
     }
 
-//    public boolean addUser(User user) {
-//
-//        User userFromDb = userRepo.findByFullName(user.getFullName());
-//
-//        if (userFromDb != null) {
-//            return false;
-//        }
-//        userRepo.save(user);
-//
-//        return true;
-//    }
+
     public boolean addUser(UserDto userDto) {
 
         User userFromDb = userRepo.findByFullName(userMapper.mapToUser(userDto).getFullName());
@@ -59,11 +49,12 @@ public class UserService {
 
     }
 
-    public void updateProfile(String id, User user) {
+
+    public void updateProfile(String id, UserDto userDto) {
 
         User userFromDb = findUserById(id);
 
-        checkUserData(user,userFromDb);
+        checkUserData(userMapper.mapToUser(userDto),userFromDb);
 
         userRepo.save(userFromDb);
 

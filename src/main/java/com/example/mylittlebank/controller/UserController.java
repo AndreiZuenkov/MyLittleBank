@@ -20,12 +20,6 @@ public class UserController {
         return userService.findAllUsers();
     }
 
-//    @PostMapping
-//    public boolean addUser(@RequestBody User user) {
-//
-//        return userService.addUser(user);
-//
-//    }
 
     @PostMapping
     public boolean addUser(@RequestBody UserDto userDto){
@@ -41,9 +35,9 @@ public class UserController {
     }
 
     @PatchMapping("/{id}")
-    public User updateProfile(@PathVariable String id, @RequestBody User user) {
+    public User updateProfile(@PathVariable String id, @RequestBody UserDto userDto) {
 
-        userService.updateProfile(id, user);
+        userService.updateProfile(id, userDto);
 
         return userService.findUserById(id);
     }
