@@ -14,10 +14,18 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> findAllUsers() {
+//    @GetMapping
+//    public List<User> findAllUsers() {
+//
+//        return userService.findAllUsers();
+//    }
 
-        return userService.findAllUsers();
+    @GetMapping
+    public User findUser(@RequestParam(required = false, defaultValue = "") String phone,
+                         @RequestParam(required = false, defaultValue = "") String fullName,
+                         @RequestParam(required = false, defaultValue = "") String email){
+
+        return userService.findUser(phone,fullName,email);
     }
 
 

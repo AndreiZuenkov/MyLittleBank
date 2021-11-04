@@ -103,4 +103,23 @@ public class UserService {
 
         return false;
     }
+
+    public User findUser(String phoneFromQuery, String fullNameFromQuery, String emailFromQuery){
+
+        if(phoneFromQuery !=null && !phoneFromQuery.isEmpty()){
+            return userRepo.findByPhone(phoneFromQuery);
+        }
+
+        if(fullNameFromQuery !=null && !fullNameFromQuery.isEmpty()){
+            return userRepo.findByFullName(fullNameFromQuery);
+        }
+
+        if(emailFromQuery !=null && !emailFromQuery.isEmpty()){
+            return userRepo.findByEmail(emailFromQuery);
+        }
+
+        return null;
+    }
+
+
 }
