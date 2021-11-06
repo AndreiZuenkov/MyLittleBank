@@ -20,14 +20,20 @@ public class AccountController {
     }
 
     @PostMapping("/{id}/")
-    public Account createAccount(@PathVariable String id, Account account){
+    public Account createAccount(@PathVariable String id){
 
-        accountService.createAccount(id,account);
+        accountService.createAccount(id);
         return null;
     }
 
     @DeleteMapping("/{id}/{accountNumber}")
     public void deleteAccount(@PathVariable String id, @PathVariable String accountNumber){
         accountService.deleteAccount(id, accountNumber);
+    }
+
+    @PostMapping("/{id}/{accountNumber}")
+    public void changeAmount(@PathVariable String id, @PathVariable String accountNumber, @RequestBody Account account){
+        accountService.changeAmount(id, accountNumber, account.getAmount().toString());
+
     }
 }

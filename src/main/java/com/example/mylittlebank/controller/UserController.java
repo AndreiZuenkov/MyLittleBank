@@ -4,6 +4,7 @@ import com.example.mylittlebank.controller.dto.UserDto;
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,9 +31,12 @@ public class UserController {
 
 
     @PostMapping
-    public boolean addUser(@RequestBody UserDto userDto){
+    public ResponseEntity addUser(@RequestBody UserDto userDto){ //FIXME не возвращает http status
 
-        return userService.addUser(userDto);
+        if(userService.addUser(userDto)){
+            return ResponseEntity.ok().build();
+        }
+        return  ResponseEntity.noContent().build();
     }
 
     @GetMapping("/{id}")
