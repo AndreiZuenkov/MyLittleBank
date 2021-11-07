@@ -41,11 +41,7 @@ public class UserService {
 
     public User findUserById(String idFromQuery) {
 
-        long id = Long.parseLong(idFromQuery);
-
-        User userFromDb = userRepo.findById(id);
-
-        return userFromDb;
+        return userRepo.findById(Integer.parseInt(idFromQuery));
 
     }
 
@@ -54,13 +50,13 @@ public class UserService {
 
         User userFromDb = findUserById(id);
 
-        checkUserData(userMapper.mapToUser(userDto),userFromDb);
+        checkUserData(userMapper.mapToUser(userDto), userFromDb);
 
         userRepo.save(userFromDb);
 
     }
 
-    private void checkUserData(User userFromQuery, User userFromDb){
+    private void checkUserData(User userFromQuery, User userFromDb) {
 
         String userFullName = userFromDb.getFullName();
 
@@ -104,17 +100,17 @@ public class UserService {
         return false;
     }
 
-    public User findUser(String phoneFromQuery, String fullNameFromQuery, String emailFromQuery){
+    public User findUser(String phoneFromQuery, String fullNameFromQuery, String emailFromQuery) {
 
-        if(phoneFromQuery !=null && !phoneFromQuery.isEmpty()){
+        if (phoneFromQuery != null && !phoneFromQuery.isEmpty()) {
             return userRepo.findByPhone(phoneFromQuery);
         }
 
-        if(fullNameFromQuery !=null && !fullNameFromQuery.isEmpty()){
+        if (fullNameFromQuery != null && !fullNameFromQuery.isEmpty()) {
             return userRepo.findByFullName(fullNameFromQuery);
         }
 
-        if(emailFromQuery !=null && !emailFromQuery.isEmpty()){
+        if (emailFromQuery != null && !emailFromQuery.isEmpty()) {
             return userRepo.findByEmail(emailFromQuery);
         }
 

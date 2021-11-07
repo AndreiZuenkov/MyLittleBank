@@ -1,44 +1,23 @@
-package com.example.mylittlebank.model;
+package com.example.mylittlebank.controller.dto;
 
-import javax.persistence.*;
+import com.example.mylittlebank.model.User;
+
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "accounts")
-public class Account {
+public class AccountDto {
 
-    @Id
-    @Column(name = "account_number")
+
     private long accountNumber;
-
     private double amount;
-
-    @Column(name = "opening_date")
     private LocalDate openingDate;
-
-    @Column(name = "validity_period")
     private LocalDate validityPeriod;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "owner_id")
     private User owner;
 
-    public Account() {
-    }
-
-    public Account(long accountNumber, double amount, LocalDate openingDate, LocalDate validityPeriod, User owner) {
-        this.accountNumber = accountNumber;
-        this.amount = amount;
-        this.openingDate = openingDate;
-        this.validityPeriod = validityPeriod;
-        this.owner = owner;
-    }
-
-    public Long getAccountNumber() {
+    public long getAccountNumber() {
         return accountNumber;
     }
 
-    public void setAccountNumber(Long accountNumber) {
+    public void setAccountNumber(long accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -73,6 +52,4 @@ public class Account {
     public void setOwner(User owner) {
         this.owner = owner;
     }
-
-
 }

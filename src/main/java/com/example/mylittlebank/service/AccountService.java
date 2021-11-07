@@ -1,8 +1,10 @@
 package com.example.mylittlebank.service;
 
+import com.example.mylittlebank.controller.dto.AccountDto;
 import com.example.mylittlebank.model.Account;
 import com.example.mylittlebank.model.User;
 import com.example.mylittlebank.repository.AccountRepo;
+import com.example.mylittlebank.service.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,9 @@ public class AccountService {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AccountMapper accountMapper;
 
     public List<Account> findAllUserAccounts(String idFromQuery) {
 
@@ -47,6 +52,10 @@ public class AccountService {
         return accountRepo.findByAccountNumber(Long.parseLong(accountNumber));
     }
 
+    private Account findByAccountNumber(long accountNumber) {
+        return accountRepo.findByAccountNumber(accountNumber);
+    }
+
     public boolean deleteAccount(String idFromQuery, String accountNumber) {
 
         if (findByAccountNumber(accountNumber) != null) {
@@ -56,26 +65,29 @@ public class AccountService {
         return false;
     }
 
-    public boolean changeAmount(String idFromQuery, String accountNumber, String amount) {
+    public boolean changeAmount(String idFromQuery, String accountNumber, AccountDto accountDto) {
 
-        Account account = findByAccountNumber(accountNumber);
-        if (userService.findUserById(idFromQuery) != null && chekOperation(accountNumber, amount)) {
-                account.setAmount(incrementAmount(accountNumber, amount));
-                accountRepo.save(account);
-                return true;
+        Account accountFromDb = findByAccountNumber(accountNumber);
+
+        Account tempAccount = accountMapper.mapToAccount(accountDto);
+
+        if (userService.findUserById(idFromQuery) != null && chekOperation(accountNumber, tempAccount.getAmount())) {
+            accountFromDb.setAmount(incrementAmount(accountNumber, tempAccount.getAmount()));
+            accountRepo.save(accountFromDb);
+            return true;
 
         }
         return false;
     }
 
-    private boolean chekOperation(String accountNumber, String amountFromQuery) {
-        double amount = Double.parseDouble(amountFromQuery);
-        int temp = Double.compare(0.0, Math.signum(amount));
+    private boolean chekOperation(String accountNumber, double amountFromQuery) {
+
+        int temp = Double.compare(0.0, Math.signum(amountFromQuery));
 
         if (temp == -1) {
             return true;
         } else if (temp == 1) {
-            if (findByAccountNumber(accountNumber).getAmount() > Math.abs(amount)) {
+            if (findByAccountNumber(accountNumber).getAmount() > Math.abs(amountFromQuery)) {
                 return true;
             }
         } else if (temp == 0) return false;
@@ -84,13 +96,39 @@ public class AccountService {
     }
 
 
-    private double incrementAmount(String accountNumber, String amountFromQuery) {
+    private double incrementAmount(String accountNumber, double amountFromQuery) {
 
-        double amount = Double.parseDouble(amountFromQuery);
-
-        return findByAccountNumber(accountNumber).getAmount() + amount;
+        return findByAccountNumber(accountNumber).getAmount() + amountFromQuery;
 
     }
+
+    private double incrementAmount(long accountNumber, double amountFromQuery) {
+
+        return findByAccountNumber(accountNumber).getAmount() + amountFromQuery;
+
+    }
+
+    public boolean transferBetweenAccounts(String idFromQuery, String accountNumber, AccountDto accountDto) {
+
+        Account accountFromDb = findByAccountNumber(accountNumber);
+
+        Account tempAccount = accountMapper.mapToAccount(accountDto);
+
+        Account accountForTransfer = findByAccountNumber(tempAccount.getAccountNumber());
+
+        if (accountForTransfer != null && accountForTransfer.getOwner() != null && tempAccount.getAmount() > 0) {
+            if (userService.findUserById(idFromQuery) != null && accountFromDb != null && findByAccountNumber(accountNumber).getAmount() >= tempAccount.getAmount()) {
+                accountFromDb.setAmount(incrementAmount(accountNumber, tempAccount.getAmount() * (-1)));
+                accountRepo.save(accountFromDb);
+                accountForTransfer.setAmount(incrementAmount(accountForTransfer.getAccountNumber(), tempAccount.getAmount()));
+                accountRepo.save(accountForTransfer);
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
 }
 
