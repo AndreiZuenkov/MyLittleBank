@@ -1,30 +1,24 @@
 package com.example.mylittlebank.controller.dto;
 
 import com.example.mylittlebank.model.Account;
+import com.example.mylittlebank.model.TransactionType;
 
 import java.time.LocalDateTime;
 
 public class TransactionDto {
 
     private long id;
-    private String type;
+    private TransactionType type;
     private double amount;
     private LocalDateTime dateTime;
-    private Account account;
+    private long accountNumber;
 
-    public long getId() {
-        return id;
-    }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 
@@ -44,11 +38,11 @@ public class TransactionDto {
         this.dateTime = dateTime;
     }
 
-    public Account getAccount() {
-        return account;
+    public long getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountNumber(long accountNumber) {
+        this.accountNumber = accountNumber;
     }
 }

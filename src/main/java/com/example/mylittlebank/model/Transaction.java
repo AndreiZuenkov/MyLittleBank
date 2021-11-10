@@ -2,7 +2,6 @@ package com.example.mylittlebank.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 public class Transaction {
@@ -11,7 +10,8 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private TransactionType type;
     private double amount;
 
     @Column(name="date_time")
@@ -21,15 +21,22 @@ public class Transaction {
     @JoinColumn(name = "account_id")
     private Account account;
 
+
     public Transaction() {
     }
 
+    public Transaction(TransactionType type, double amount, LocalDateTime dateTime, Account account) {
+        this.type = type;
+        this.amount = amount;
+        this.dateTime = dateTime;
+        this.account = account;
+    }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(TransactionType type) {
         this.type = type;
     }
 

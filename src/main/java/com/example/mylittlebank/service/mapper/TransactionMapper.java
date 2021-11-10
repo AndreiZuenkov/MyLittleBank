@@ -2,10 +2,15 @@ package com.example.mylittlebank.service.mapper;
 
 import com.example.mylittlebank.controller.dto.TransactionDto;
 import com.example.mylittlebank.model.Transaction;
+import com.example.mylittlebank.service.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionMapper {
+
+    @Autowired
+    private AccountService accountService;
 
     public TransactionDto mapToTransactionDto(Transaction transaction){
 
@@ -14,7 +19,7 @@ public class TransactionMapper {
         transactionDto.setType(transaction.getType());
         transactionDto.setAmount(transaction.getAmount());
         transactionDto.setDateTime(transaction.getDateTime());
-        transactionDto.setAccount(transaction.getAccount());
+        transactionDto.setAccountNumber(transaction.getAccount().getAccountNumber());
 
         return transactionDto;
 
@@ -27,7 +32,7 @@ public class TransactionMapper {
         transaction.setType(transactionDto.getType());
         transaction.setAmount(transactionDto.getAmount());
         transaction.setDateTime(transactionDto.getDateTime());
-        transaction.setAccount(transactionDto.getAccount());
+        transaction.setAccount(accountService.findByAccountNumber(transactionDto.getAccountNumber()));
 
         return transaction;
     }

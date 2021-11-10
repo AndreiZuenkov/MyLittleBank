@@ -1,6 +1,6 @@
 package com.example.mylittlebank.controller;
 
-import com.example.mylittlebank.model.Transaction;
+import com.example.mylittlebank.controller.dto.TransactionDto;
 import com.example.mylittlebank.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +15,7 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping("{id}/{accountNumber}/transaction")
-    public void doTransaction(@PathVariable String id, @PathVariable String accountNumber, @RequestBody Transaction transactionDto){
+    public void doTransaction(@PathVariable String id, @PathVariable String accountNumber, @RequestBody TransactionDto transactionDto){
         transactionService.doTransaction(id, accountNumber,transactionDto);
     }
 }

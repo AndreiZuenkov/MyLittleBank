@@ -32,16 +32,4 @@ public class AccountController {
         accountService.deleteAccount(id, accountNumber);
     }
 
-    @PostMapping("/{id}/{accountNumber}")
-    public void changeAmount(@PathVariable String id, @PathVariable String accountNumber, @RequestBody AccountDto accountDto){
-        accountService.changeAmount(id, accountNumber, accountDto);
-    }
-
-
-
-    @PostMapping("/{id}/{accountNumber}/transfer")
-    public void transferBetweenAccounts(@PathVariable String id, @PathVariable String accountNumber, @RequestBody AccountDto accountDto) {
-        accountService.transferBetweenAccounts(id, accountNumber, accountDto);
-
-    }
 }
