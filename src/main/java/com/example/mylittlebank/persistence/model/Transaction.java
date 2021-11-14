@@ -1,4 +1,4 @@
-package com.example.mylittlebank.model;
+package com.example.mylittlebank.persistence.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

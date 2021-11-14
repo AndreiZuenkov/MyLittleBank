@@ -1,6 +1,6 @@
-package com.example.mylittlebank.repository;
+package com.example.mylittlebank.persistence.repository;
 
-import com.example.mylittlebank.model.User;
+import com.example.mylittlebank.persistence.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

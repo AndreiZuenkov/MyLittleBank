@@ -1,6 +1,6 @@
 package com.example.mylittlebank.controller.dto;
 
-import com.example.mylittlebank.model.User;
+import com.example.mylittlebank.persistence.model.User;
 
 import java.time.LocalDate;
 

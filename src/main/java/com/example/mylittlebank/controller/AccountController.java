@@ -1,7 +1,6 @@
 package com.example.mylittlebank.controller;
 
-import com.example.mylittlebank.controller.dto.AccountDto;
-import com.example.mylittlebank.model.Account;
+import com.example.mylittlebank.persistence.model.Account;
 import com.example.mylittlebank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

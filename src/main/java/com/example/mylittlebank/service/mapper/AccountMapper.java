@@ -1,7 +1,7 @@
 package com.example.mylittlebank.service.mapper;
 
 import com.example.mylittlebank.controller.dto.AccountDto;
-import com.example.mylittlebank.model.Account;
+import com.example.mylittlebank.persistence.model.Account;
 import org.springframework.stereotype.Service;
 
 @Service

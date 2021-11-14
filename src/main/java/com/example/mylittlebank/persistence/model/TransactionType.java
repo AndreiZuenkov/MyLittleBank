@@ -1,4 +1,4 @@
-package com.example.mylittlebank.model;
+package com.example.mylittlebank.persistence.model;
 
 public enum TransactionType {
     CREDITING,

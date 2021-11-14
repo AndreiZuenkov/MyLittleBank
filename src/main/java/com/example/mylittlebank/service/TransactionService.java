@@ -1,15 +1,17 @@
 package com.example.mylittlebank.service;
 
 import com.example.mylittlebank.controller.dto.TransactionDto;
-import com.example.mylittlebank.model.Account;
-import com.example.mylittlebank.model.Transaction;
-import com.example.mylittlebank.model.TransactionType;
-import com.example.mylittlebank.repository.TransactionRepo;
+import com.example.mylittlebank.persistence.model.Account;
+import com.example.mylittlebank.persistence.model.Transaction;
+import com.example.mylittlebank.persistence.model.TransactionType;
+import com.example.mylittlebank.persistence.repository.TransactionRepo;
 import com.example.mylittlebank.service.mapper.TransactionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.Queue;
 
 @Service
 public class TransactionService {
@@ -26,6 +28,10 @@ public class TransactionService {
     @Autowired
     private AccountService accountService;
 
+    private Queue<Transaction> queueOfOperation=new LinkedList();
+
+
+
 
     public boolean doTransaction(String idFromQuery, String accountNumberFromQuery, TransactionDto transactionDto) {
 
@@ -40,6 +46,12 @@ public class TransactionService {
                 return doWithdrawing(idFromQuery, accountNumberFromQuery, transaction);
         }
         return false;
+    }
+
+
+    private boolean checkOperation(){
+        return  false;
+
     }
 
     private boolean doTransfer(String idFromQuery, String accountNumberFromQuery, Transaction transaction) {

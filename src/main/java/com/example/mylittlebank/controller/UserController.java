@@ -1,13 +1,14 @@
 package com.example.mylittlebank.controller;
 
+import com.example.mylittlebank.controller.dto.Response;
 import com.example.mylittlebank.controller.dto.UserDto;
-import com.example.mylittlebank.model.User;
+import com.example.mylittlebank.exception.UserException;
+import com.example.mylittlebank.persistence.model.User;
 import com.example.mylittlebank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 public class UserController {
@@ -24,19 +25,20 @@ public class UserController {
     @GetMapping
     public User findUser(@RequestParam(required = false, defaultValue = "") String phone,
                          @RequestParam(required = false, defaultValue = "") String fullName,
-                         @RequestParam(required = false, defaultValue = "") String email){
+                         @RequestParam(required = false, defaultValue = "") String email) {
 
-        return userService.findUser(phone,fullName,email);
+        return userService.findUser(phone, fullName, email);
     }
 
 
     @PostMapping
-    public ResponseEntity addUser(@RequestBody UserDto userDto){ //FIXME не возвращает http status
+    public Response addUser(@RequestBody UserDto userDto) throws UserException {
 
-        if(userService.addUser(userDto)){
-            return ResponseEntity.ok().build();
+        if (!userService.addUser(userDto)) {
+            throw new UserException("User not add");
         }
-        return  ResponseEntity.noContent().build();
+
+        return new Response("Ok");
     }
 
     @GetMapping("/{id}")
@@ -55,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("{id}")
-    public boolean deleteUser(@PathVariable String id){
+    public boolean deleteUser(@PathVariable String id) {
 
         return userService.deleteUser(id);
     }
