@@ -25,25 +25,37 @@ public class AccountService {
 
     public List<Account> findAllUserAccounts(String idFromQuery) {
 
-
         List<Account> accountList = accountRepo.findAllByOwner(userService.findUserById(idFromQuery));
 
         return accountList;
     }
 
-    public Account createAccount(String idFromQuery) {
+    public boolean checkUserAccount(String idFromQuery, String accountNumberFromQuery) {
+        List<Account> accountList = findAllUserAccounts(idFromQuery);
+        for (Account account : accountList
+        ) {
+            if (account.getAccountNumber() == Long.parseLong(accountNumberFromQuery)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-        User user = userService.findUserById(idFromQuery);
+    public boolean createAccount(String idFromQuery) {
 
-        Account account = new Account(Math.abs(UUID.randomUUID().getMostSignificantBits()),
-                0,
-                LocalDate.now(),
-                LocalDate.of(LocalDate.now().getYear() + 3, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()),
-                user);
 
-        accountRepo.save(account);
+        if (userService.findUserById(idFromQuery) != null) {
 
-        return account;
+            Account account = new Account(Math.abs(UUID.randomUUID().getMostSignificantBits()),
+                    0,
+                    LocalDate.now(),
+                    LocalDate.of(LocalDate.now().getYear() + 3, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()),
+                    userService.findUserById(idFromQuery));
+
+            accountRepo.save(account);
+            return true;
+        }
+        return false;
     }
 
     public Account findByAccountNumber(String accountNumber) {
@@ -63,9 +75,9 @@ public class AccountService {
         return false;
     }
 
-    public void changeAmount(Account account, double amount){
+    public void changeAmount(Account account, double amount) {
 
-        account.setAmount(account.getAmount()+amount);
+        account.setAmount(account.getAmount() + amount);
         accountRepo.save(account);
 
     }

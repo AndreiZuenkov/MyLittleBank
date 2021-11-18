@@ -1,5 +1,7 @@
 package com.example.mylittlebank.controller;
 
+import com.example.mylittlebank.controller.dto.Response;
+import com.example.mylittlebank.exception.AccountException;
 import com.example.mylittlebank.persistence.model.Account;
 import com.example.mylittlebank.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +22,13 @@ public class AccountController {
     }
 
     @PostMapping("/{id}/")
-    public Account createAccount(@PathVariable String id) {
+    public Response createAccount(@PathVariable String id) throws AccountException {
 
-        accountService.createAccount(id);
-        return null;
+        if (!accountService.createAccount(id)) {
+            throw new AccountException("Account not created");
+        }
+
+        return new Response("Account created");
     }
 
     @DeleteMapping("/{id}/{accountNumber}")

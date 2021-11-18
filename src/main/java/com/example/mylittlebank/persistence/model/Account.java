@@ -1,8 +1,11 @@
 package com.example.mylittlebank.persistence.model;
 
+import lombok.Data;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Data
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -33,46 +36,4 @@ public class Account {
         this.validityPeriod = validityPeriod;
         this.owner = owner;
     }
-
-    public Long getAccountNumber() {
-        return accountNumber;
-    }
-
-    public void setAccountNumber(Long accountNumber) {
-        this.accountNumber = accountNumber;
-    }
-
-    public double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(double amount) {
-        this.amount = amount;
-    }
-
-    public LocalDate getOpeningDate() {
-        return openingDate;
-    }
-
-    public void setOpeningDate(LocalDate openingDate) {
-        this.openingDate = openingDate;
-    }
-
-    public LocalDate getValidityPeriod() {
-        return validityPeriod;
-    }
-
-    public void setValidityPeriod(LocalDate validityPeriod) {
-        this.validityPeriod = validityPeriod;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-
 }

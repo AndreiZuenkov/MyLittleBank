@@ -1,6 +1,7 @@
 package com.example.mylittlebank.service;
 
 import com.example.mylittlebank.controller.dto.TransactionDto;
+import com.example.mylittlebank.controller.dto.Operation;
 import com.example.mylittlebank.persistence.model.Account;
 import com.example.mylittlebank.persistence.model.Transaction;
 import com.example.mylittlebank.persistence.model.TransactionType;
@@ -28,12 +29,14 @@ public class TransactionService {
     @Autowired
     private AccountService accountService;
 
-    private Queue<Transaction> queueOfOperation=new LinkedList();
+    private Queue<Operation> queueOfOperation=new LinkedList();
 
 
 
 
-    public boolean doTransaction(String idFromQuery, String accountNumberFromQuery, TransactionDto transactionDto) {
+    public boolean doTransaction(String idFromQuery, String accountNumberFromQuery, TransactionDto transactionDto) {//TODO сделать работу с очередью операций
+
+        queueOfOperation.add(new Operation(idFromQuery, accountNumberFromQuery, transactionDto));
 
         Transaction transaction = transactionMapper.mapToTransaction(transactionDto);
 
@@ -77,7 +80,8 @@ public class TransactionService {
     private boolean doCrediting(String idFromQuery, String accountNumberFromQuery, Transaction transaction) {
         Account account = accountService.findByAccountNumber(accountNumberFromQuery);
 
-        if (userService.findUserById(idFromQuery) != null && account != null && transaction.getAmount() > 0) {
+        if (userService.findUserById(idFromQuery) != null && accountService.checkUserAccount(idFromQuery,accountNumberFromQuery)
+                && account != null && transaction.getAmount() > 0) {
             accountService.changeAmount(account, transaction.getAmount());
             transactionRepo.save(new Transaction(transaction.getType(), transaction.getAmount(), LocalDateTime.now(), account));
             return true;
