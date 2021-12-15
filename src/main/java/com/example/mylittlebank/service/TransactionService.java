@@ -29,31 +29,40 @@ public class TransactionService {
     @Autowired
     private AccountService accountService;
 
-    private Queue<Operation> queueOfOperation=new LinkedList();
+    private final Queue<Operation> queueOfOperation = new LinkedList();
 
 
+    public void doTransaction(String idFromQuery, String accountNumberFromQuery, TransactionDto transactionDto) {
 
+        queueOfOperation.offer(new Operation(idFromQuery, accountNumberFromQuery, transactionDto));
 
-    public boolean doTransaction(String idFromQuery, String accountNumberFromQuery, TransactionDto transactionDto) {//TODO сделать работу с очередью операций
+        checkOperation();
 
-        queueOfOperation.add(new Operation(idFromQuery, accountNumberFromQuery, transactionDto));
-
-        Transaction transaction = transactionMapper.mapToTransaction(transactionDto);
-
-        switch (transaction.getType()) {
-            case TRANSFER:
-                return doTransfer(idFromQuery, accountNumberFromQuery, transaction);
-            case CREDITING:
-                return doCrediting(idFromQuery, accountNumberFromQuery, transaction);
-            case WITHDRAWING:
-                return doWithdrawing(idFromQuery, accountNumberFromQuery, transaction);
-        }
-        return false;
     }
 
 
-    private boolean checkOperation(){
-        return  false;
+    private void checkOperation() {
+
+        while (!queueOfOperation.isEmpty()) {
+
+            Operation operation = queueOfOperation.poll();
+
+            Transaction transaction = transactionMapper.mapToTransaction(operation.getTransactionDto());
+
+            switch (operation.getTransactionDto().getType()) {
+                case TRANSFER:
+                    doTransfer(operation.getIdFromQuery(), operation.getAccountNumberFromQuery(), transaction);
+                    break;
+                case CREDITING:
+                    doCrediting(operation.getIdFromQuery(), operation.getAccountNumberFromQuery(), transaction);
+                    break;
+                case WITHDRAWING:
+                    doWithdrawing(operation.getIdFromQuery(), operation.getAccountNumberFromQuery(), transaction);
+                    break;
+            }
+
+        }
+
 
     }
 
@@ -65,7 +74,7 @@ public class TransactionService {
         if (userService.findUserById(idFromQuery) != null && accountFrom != null && accountTo != null
                 && accountFrom.getAccountNumber() != accountTo.getAccountNumber()
                 && transaction.getAmount() > 0) {
-            if (accountFrom.getAmount()>= transaction.getAmount()){
+            if (accountFrom.getAmount() >= transaction.getAmount()) {
                 accountService.changeAmount(accountFrom, (-transaction.getAmount()));
                 transactionRepo.save(new Transaction(transaction.getType(), transaction.getAmount(), LocalDateTime.now(), accountFrom));
                 accountService.changeAmount(accountTo, transaction.getAmount());
@@ -80,7 +89,7 @@ public class TransactionService {
     private boolean doCrediting(String idFromQuery, String accountNumberFromQuery, Transaction transaction) {
         Account account = accountService.findByAccountNumber(accountNumberFromQuery);
 
-        if (userService.findUserById(idFromQuery) != null && accountService.checkUserAccount(idFromQuery,accountNumberFromQuery)
+        if (userService.findUserById(idFromQuery) != null && accountService.checkUserAccount(idFromQuery, accountNumberFromQuery)
                 && account != null && transaction.getAmount() > 0) {
             accountService.changeAmount(account, transaction.getAmount());
             transactionRepo.save(new Transaction(transaction.getType(), transaction.getAmount(), LocalDateTime.now(), account));
