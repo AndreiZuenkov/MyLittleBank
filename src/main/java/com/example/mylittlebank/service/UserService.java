@@ -3,7 +3,7 @@ package com.example.mylittlebank.service;
 import com.example.mylittlebank.controller.dto.UserDto;
 import com.example.mylittlebank.persistence.model.User;
 import com.example.mylittlebank.persistence.repository.UserRepo;
-import com.example.mylittlebank.service.mapper.UserMapper;
+import com.example.mylittlebank.service.mapper.IUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +16,6 @@ public class UserService {
     @Autowired
     private UserRepo userRepo;
 
-    @Autowired
-    private UserMapper userMapper;
-
     public List<User> findAllUsers() {
 
         List<User> userList = userRepo.findAll();
@@ -29,12 +26,13 @@ public class UserService {
 
     public boolean addUser(UserDto userDto) {
 
-        User userFromDb = userRepo.findByFullName(userMapper.mapToUser(userDto).getFullName());
+
+        User userFromDb = userRepo.findByFullName(IUserMapper.USER_MAPPER.mapToUser(userDto).getFullName());
 
         if (userFromDb != null) {
             return false;
         }
-        userRepo.save(userMapper.mapToUser(userDto));
+        userRepo.save(IUserMapper.USER_MAPPER.mapToUser(userDto));
 
         return true;
     }
@@ -50,7 +48,7 @@ public class UserService {
 
         User userFromDb = findUserById(id);
 
-        checkUserData(userMapper.mapToUser(userDto), userFromDb);
+        checkUserData(IUserMapper.USER_MAPPER.mapToUser(userDto), userFromDb);
 
         userRepo.save(userFromDb);
 

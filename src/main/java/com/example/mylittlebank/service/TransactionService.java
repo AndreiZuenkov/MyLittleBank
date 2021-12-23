@@ -1,12 +1,12 @@
 package com.example.mylittlebank.service;
 
-import com.example.mylittlebank.controller.dto.TransactionDto;
 import com.example.mylittlebank.controller.dto.Operation;
+import com.example.mylittlebank.controller.dto.TransactionDto;
 import com.example.mylittlebank.persistence.model.Account;
 import com.example.mylittlebank.persistence.model.Transaction;
 import com.example.mylittlebank.persistence.model.TransactionType;
 import com.example.mylittlebank.persistence.repository.TransactionRepo;
-import com.example.mylittlebank.service.mapper.TransactionMapper;
+import com.example.mylittlebank.service.mapper.ITransactionMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +19,6 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepo transactionRepo;
-
-    @Autowired
-    private TransactionMapper transactionMapper;
 
     @Autowired
     private UserService userService;
@@ -47,7 +44,8 @@ public class TransactionService {
 
             Operation operation = queueOfOperation.poll();
 
-            Transaction transaction = transactionMapper.mapToTransaction(operation.getTransactionDto());
+
+            Transaction transaction = ITransactionMapper.TRANSACTION_MAPPER.mapToTransaction(operation.getTransactionDto());
 
             switch (operation.getTransactionDto().getType()) {
                 case TRANSFER:
