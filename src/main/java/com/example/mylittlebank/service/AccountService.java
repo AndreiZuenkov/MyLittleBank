@@ -1,9 +1,7 @@
 package com.example.mylittlebank.service;
 
 import com.example.mylittlebank.persistence.model.Account;
-import com.example.mylittlebank.persistence.model.User;
 import com.example.mylittlebank.persistence.repository.AccountRepo;
-import com.example.mylittlebank.service.mapper.AccountMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +17,6 @@ public class AccountService {
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AccountMapper accountMapper;
 
     public List<Account> findAllUserAccounts(String idFromQuery) {
 
