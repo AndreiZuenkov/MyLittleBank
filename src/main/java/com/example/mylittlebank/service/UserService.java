@@ -26,15 +26,18 @@ public class UserService {
 
     public boolean addUser(UserDto userDto) {
 
+        if (userDto != null) {
 
-        User userFromDb = userRepo.findByFullName(IUserMapper.USER_MAPPER.mapToUser(userDto).getFullName());
+            User userFromDb = userRepo.findByFullName(IUserMapper.USER_MAPPER.mapToUser(userDto).getFullName());
 
-        if (userFromDb != null) {
-            return false;
+            if (userFromDb != null) {
+                return false;
+            }
+            userRepo.save(IUserMapper.USER_MAPPER.mapToUser(userDto));
+
+            return true;
         }
-        userRepo.save(IUserMapper.USER_MAPPER.mapToUser(userDto));
-
-        return true;
+        return false;
     }
 
     public User findUserById(String idFromQuery) {
