@@ -82,5 +82,27 @@ class UserServiceTest {
 
         Mockito.verify(userRepo).delete(Mockito.any());
     }
+
+    @Test
+    public void testFindUser() {
+
+        String phoneFromQuery = " ";
+        String fullNameFromQuery = " ";
+        String emailFromQuery = " ";
+
+        userService.findUser(phoneFromQuery, fullNameFromQuery, emailFromQuery);
+        userService.findUser(null, fullNameFromQuery, emailFromQuery);
+        userService.findUser(null, null, emailFromQuery);
+
+        User userNotFound=userService.findUser(null,null,null);
+
+
+        Mockito.verify(userRepo).findByPhone(phoneFromQuery);
+        Mockito.verify(userRepo).findByFullName(fullNameFromQuery);
+        Mockito.verify(userRepo).findByEmail(emailFromQuery);
+
+        Assertions.assertEquals(null,userNotFound);
+
+    }
 }
 
