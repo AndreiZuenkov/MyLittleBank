@@ -71,10 +71,11 @@ public class AccountService {
     }
 
     public Account findByAccountNumber(long accountNumber) {
+
         return accountRepo.findByAccountNumber(accountNumber);
     }
 
-    public boolean deleteAccount(String idFromQuery, String accountNumber) {
+    public boolean deleteAccount(String idFromQuery, String accountNumber) { //TODO проверку, что данные аккаунт принадлежит пользователю
 
         if (findByAccountNumber(accountNumber) != null) {
             accountRepo.delete(findByAccountNumber(accountNumber));
@@ -85,9 +86,10 @@ public class AccountService {
 
     public void changeAmount(Account account, double amount) {
 
-        account.setAmount(account.getAmount() + amount);
-        accountRepo.save(account);
-
+        if (account != null && amount != 0) {
+            account.setAmount(account.getAmount() + amount);
+            accountRepo.save(account);
+        }
     }
 
 }
