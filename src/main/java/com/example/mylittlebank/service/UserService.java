@@ -42,8 +42,12 @@ public class UserService {
 
     public User findUserById(String idFromQuery) {
 
-        return userRepo.findById(Integer.parseInt(idFromQuery));
+        if (idFromQuery != null && !idFromQuery.isEmpty()) {
 
+            return userRepo.findById(Integer.parseInt(idFromQuery));
+
+        }
+        return null;
     }
 
 

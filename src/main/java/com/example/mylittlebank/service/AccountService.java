@@ -20,17 +20,26 @@ public class AccountService {
 
     public List<Account> findAllUserAccounts(String idFromQuery) {
 
-        List<Account> accountList = accountRepo.findAllByOwner(userService.findUserById(idFromQuery));
+        if (idFromQuery != null && !idFromQuery.isEmpty()) {
 
-        return accountList;
+            List<Account> accountList = accountRepo.findAllByOwner(userService.findUserById(idFromQuery));
+
+            return accountList;
+        }
+        return null;
     }
 
     public boolean checkUserAccount(String idFromQuery, String accountNumberFromQuery) {
+
         List<Account> accountList = findAllUserAccounts(idFromQuery);
-        for (Account account : accountList
-        ) {
-            if (account.getAccountNumber() == Long.parseLong(accountNumberFromQuery)) {
-                return true;
+
+        if (accountList != null && !accountList.isEmpty() && accountNumberFromQuery != null && !accountNumberFromQuery.isEmpty()) {
+
+            for (Account account : accountList
+            ) {
+                if (account.getAccountNumber() == Long.parseLong(accountNumberFromQuery)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -54,7 +63,11 @@ public class AccountService {
     }
 
     public Account findByAccountNumber(String accountNumber) {
-        return accountRepo.findByAccountNumber(Long.parseLong(accountNumber));
+
+        if (accountNumber != null && !accountNumber.isEmpty()) {
+            return accountRepo.findByAccountNumber(Long.parseLong(accountNumber));
+        }
+        return null;
     }
 
     public Account findByAccountNumber(long accountNumber) {
