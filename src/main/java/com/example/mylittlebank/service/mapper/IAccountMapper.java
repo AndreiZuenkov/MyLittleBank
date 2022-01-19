@@ -5,8 +5,10 @@ import com.example.mylittlebank.controller.dto.AccountDto;
 import com.example.mylittlebank.persistence.model.Account;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper
+@Component
+@Mapper(implementationName = "AccountMapperImpl")
 public interface IAccountMapper {
 
     IAccountMapper ACCOUNT_MAPPER = Mappers.getMapper(IAccountMapper.class);

@@ -5,7 +5,6 @@ import com.example.mylittlebank.persistence.model.User;
 import com.example.mylittlebank.persistence.repository.AccountRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -158,13 +157,51 @@ class AccountServiceTest {
 
     @Test
     void deleteAccount() {
+
+        String idFromQuery = "1";
+        String accountNumber = "1";
+        User user = new User();
+        Account account = new Account();
+        account.setAccountNumber(1);
+
+        List<Account> expectedList = new ArrayList<>() {{
+            add(account);
+        }};
+
+        Mockito.when(userService.findUserById(idFromQuery)).thenReturn(user);
+
+        Mockito.when(accountRepo.findAllByOwner(user)).thenReturn(expectedList);
+
+        Mockito.when(accountRepo.findByAccountNumber(Long.parseLong(accountNumber))).thenReturn(account);
+
+        boolean isAccountDeleted=accountService.deleteAccount(idFromQuery,accountNumber);
+
+        Assertions.assertTrue(isAccountDeleted);
+
+        Mockito.verify(accountRepo).delete(account);
+    }
+
+    @Test
+    void testDeleteAccount(){
+        String idFromQuery = "1";
+        String accountNumber = "1";
+
+        boolean isAccountDeletedIfIdFromQueryNull=accountService.deleteAccount(null,accountNumber);
+        boolean isAccountDeletedIfAccountNumberNull=accountService.deleteAccount(idFromQuery,null);
+        boolean isAccountDeletedIfAccountNumberAndIdFromQueryNulls=accountService.deleteAccount(null,null);
+
+
+        Assertions.assertFalse(isAccountDeletedIfIdFromQueryNull);
+        Assertions.assertFalse(isAccountDeletedIfAccountNumberNull);
+        Assertions.assertFalse(isAccountDeletedIfAccountNumberAndIdFromQueryNulls);
+
     }
 
     @Test
     void testChangeAmount() {
 
-        Account account=new Account();
-        double amount=1.0;
+        Account account = new Account();
+        double amount = 1.0;
 
         accountService.changeAmount(account, amount);
 

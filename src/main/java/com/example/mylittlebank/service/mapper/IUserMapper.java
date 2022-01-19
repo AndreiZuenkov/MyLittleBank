@@ -6,7 +6,7 @@ import com.example.mylittlebank.persistence.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(implementationName = "UserMapperImpl")
 public interface IUserMapper {
 
     IUserMapper USER_MAPPER = Mappers.getMapper(IUserMapper.class);

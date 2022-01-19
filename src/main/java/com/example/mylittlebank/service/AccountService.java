@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService {
@@ -75,11 +76,13 @@ public class AccountService {
         return accountRepo.findByAccountNumber(accountNumber);
     }
 
-    public boolean deleteAccount(String idFromQuery, String accountNumber) { //TODO проверку, что данные аккаунт принадлежит пользователю
+    public boolean deleteAccount(String idFromQuery, String accountNumber) {
 
-        if (findByAccountNumber(accountNumber) != null) {
-            accountRepo.delete(findByAccountNumber(accountNumber));
-            return true;
+        if (idFromQuery != null && !idFromQuery.isEmpty() && accountNumber != null && !accountNumber.isEmpty() && checkUserAccount(idFromQuery, accountNumber)) {
+            if (findByAccountNumber(accountNumber) != null) {
+                accountRepo.delete(findByAccountNumber(accountNumber));
+                return true;
+            }
         }
         return false;
     }
@@ -91,6 +94,7 @@ public class AccountService {
             accountRepo.save(account);
         }
     }
+
 
 }
 
