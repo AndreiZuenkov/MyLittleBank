@@ -5,8 +5,10 @@ import com.example.mylittlebank.controller.dto.UserDto;
 import com.example.mylittlebank.persistence.model.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import org.springframework.stereotype.Component;
 
-@Mapper(implementationName = "UserMapperImpl")
+@Component
+@Mapper(implementationName = "IUserMapperImpl")
 public interface IUserMapper {
 
     IUserMapper USER_MAPPER = Mappers.getMapper(IUserMapper.class);

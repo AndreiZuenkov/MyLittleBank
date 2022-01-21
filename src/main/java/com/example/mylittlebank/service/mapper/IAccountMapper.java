@@ -8,7 +8,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(implementationName = "AccountMapperImpl")
+@Mapper(implementationName = "IAccountMapperImpl")
 public interface IAccountMapper {
 
     IAccountMapper ACCOUNT_MAPPER = Mappers.getMapper(IAccountMapper.class);

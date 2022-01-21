@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.stereotype.Component;
 
 @Component
-@Mapper(implementationName = "TransactionMapperImpl")
+@Mapper(implementationName = "ITransactionMapperImpl")
 public interface ITransactionMapper {
 
     ITransactionMapper TRANSACTION_MAPPER= Mappers.getMapper(ITransactionMapper.class);

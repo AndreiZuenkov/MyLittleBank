@@ -15,11 +15,11 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {TransactionMapperImpl.class})
+@SpringBootTest(classes = {ITransactionMapperImpl.class})
 class ITransactionMapperTest {
 
     @Autowired
-    private TransactionMapperImpl transactionMapper;
+    private ITransactionMapperImpl transactionMapper;
 
     @Test
     void testMapToTransactionDto() {

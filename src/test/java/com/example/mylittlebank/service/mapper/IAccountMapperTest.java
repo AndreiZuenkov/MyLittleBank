@@ -14,11 +14,11 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@SpringBootTest(classes = {AccountMapperImpl.class})
+@SpringBootTest(classes = {IAccountMapperImpl.class})
 class IAccountMapperTest {
 
     @Autowired
-    private AccountMapperImpl accountMapper;
+    private IAccountMapperImpl accountMapper;
 
 
     @Test
@@ -45,5 +45,22 @@ class IAccountMapperTest {
 
     @Test
     void mapToAccount() {
+
+        User user=new User();
+
+        AccountDto accountDto=new AccountDto(){{
+            setAmount(1);
+            setOpeningDate(LocalDate.now());
+            setOwner(user);
+            setValidityPeriod(LocalDate.of(LocalDate.now().getYear() + 3, LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth()));
+        }};
+
+        Account account=accountMapper.mapToAccount(accountDto);
+
+        Assertions.assertEquals(accountDto.getAmount(),account.getAmount());
+        Assertions.assertEquals(accountDto.getOpeningDate(), account.getOpeningDate());
+        Assertions.assertEquals(accountDto.getOwner(), account.getOwner());
+        Assertions.assertEquals(accountDto.getValidityPeriod(), account.getValidityPeriod());
+
     }
 }

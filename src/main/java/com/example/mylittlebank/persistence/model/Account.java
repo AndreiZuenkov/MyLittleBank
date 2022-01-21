@@ -3,6 +3,7 @@ package com.example.mylittlebank.persistence.model;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 
 @Data
@@ -14,14 +15,19 @@ public class Account {
     @Column(name = "account_number")
     private long accountNumber;
 
+    @Positive(message = "amount should be positive")
+    @NotNull
     private double amount;
 
+    @PastOrPresent
     @Column(name = "opening_date")
     private LocalDate openingDate;
 
+    @Future
     @Column(name = "validity_period")
     private LocalDate validityPeriod;
 
+    @NotNull(message = "owner cannot be null")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private User owner;
