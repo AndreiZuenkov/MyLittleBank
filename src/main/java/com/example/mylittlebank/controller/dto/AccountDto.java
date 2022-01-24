@@ -2,15 +2,28 @@ package com.example.mylittlebank.controller.dto;
 
 import com.example.mylittlebank.persistence.model.User;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 
 public class AccountDto {
 
 
     private long accountNumber;
+
+    @Positive(message = "amount should be positive")
+    @NotNull
     private double amount;
+
+    @PastOrPresent
     private LocalDate openingDate;
+
+    @Future
     private LocalDate validityPeriod;
+
+    @NotNull(message = "owner cannot be null")
     private User owner;
 
     public long getAccountNumber() {

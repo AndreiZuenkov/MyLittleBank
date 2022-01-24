@@ -9,8 +9,11 @@ import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.Valid;
 
 @RestController
 public class UserController {
@@ -18,10 +21,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    //    @GetMapping
-//    public List<User> findAllUsers() {
-//
-//        return userService.findAllUsers();
     @GetMapping
     @Operation(description = "Поиск пользователей по номеру телефона, имени, email")
     public User findUser(@RequestParam(required = false, defaultValue = "") String phone,
@@ -31,12 +30,11 @@ public class UserController {
         return userService.findUser(phone, fullName, email);
     }
 
-//    }
-
 
     @PostMapping
     @Operation(description = "Добавление нового пользователя")
-    public Response addUser(@RequestBody UserDto userDto) throws UserException {
+    public Response addUser(@Valid @RequestBody UserDto userDto) throws UserException {
+
 
         if (!userService.addUser(userDto)) {
             throw new UserException("User not add");
@@ -55,7 +53,7 @@ public class UserController {
 
     @PatchMapping("/{id}")
     @Operation(description = "Обновление данных пользователя")
-    public User updateProfile(@PathVariable String id, @RequestBody UserDto userDto) {
+    public User updateProfile(@PathVariable String id, @Valid @RequestBody UserDto userDto) {
 
         userService.updateProfile(id, userDto);
 
